@@ -8,35 +8,34 @@ PLAQUE::PLAQUE(){
 
 }
 
-PLAQUE::PLAQUE(bool blank){
-	if(blank)
-		_blank = true;
-	else
-		_init();	
-
-}
-
 PLAQUE::PLAQUE(std::string content){
-	
+
 	_init();
-	_blank = false;
 	set_content(content);
+
+	if(content == "--n"){
+		_nl = true;
+	}
+	if(content == "--b"){
+		_blank = true;
+	}
 
 }
 
 
 void PLAQUE::_init(){
+	_blank = false;
 	_nl = false;
 	_left_edge = "[";
 	_right_edge = "]";
-	_content = "";
-	_padding = "";
-	
+	set_content("");
+	set_padding(0);
+
 }
 
 
-std::string PLAQUE::set_content(std::string content){
-	
+void PLAQUE::set_content(std::string content){
+
 	_content = content;
 
 }
@@ -47,16 +46,19 @@ void PLAQUE::set_padding(int padding){
 		pd += " ";
 	}
 	_padding = pd;
-	
+
 }
 
 std::string PLAQUE::get(){
 
-	if(_blank)
-		return "";
-	if(_nl)
-		return "\n";
-	return _left_edge + _padding + _content + _padding + _right_edge;
-	
+	if(_blank){
+		return "   ";
+	}
+	else if(_nl){
+		return "--n";
+	}
+	else
+		return _left_edge + _padding + _content + _padding + _right_edge;
+
 
 }
